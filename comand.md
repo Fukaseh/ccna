@@ -9,12 +9,17 @@
 |インターフェイスコンフィギュレーションモード|(config-if)#|config-if|
 |ルーティングコンフィギュレーションモード|(config-router)#|config-router|
 |ラインコンフィギュレーションモード|(config-line)#|config-line|
+|標準ACLコンフィギュレーションモード|(config-std-nacl)#|config-std-nacl|
+|拡張ACLコンフィギュレーションモード|c(config-ext-nacl)#|config-ext-nacl|
 
 ### 分類、補足の項
-MODE:モード切替のコマンド
-SHOW:設定を確認するコマンド
-1,2,...:流れで覚えるコマンド, その間に別の操作が必要な場合は()で表記
-※:モードに注意
+|分類、補足|説明|
+|---------|----|
+|MODE|モード切替のコマンド|
+|SHOW|設定を確認するコマンド|
+|1, 2, ... |流れで覚えるコマンド, その間に別の操作が必要な場合は()で表記. やり方が複数ある場合は同じ番号が連続する|
+|※|モードに注意|
+|※C|コマンドを間違えやすいので注意|
 
 
 ## 第2章 Ciscoルータの初期設定
@@ -121,10 +126,31 @@ SHOW:設定を確認するコマンド
 
 
 ## 第5章 ACL
-
+### IPv4の標準ACL
 |モード|コマンド|説明|分類、補足|
-|-----|--------|---|---------|
-|
+|-----|--------|---|---------| 
+|config|access-list <ACL番号> <permit\|deny> <送信元IPアドレス> <ワイルドカードマスク>|番号付き標準ACLの作成(ACL番号:1-99,1300-1999)|1,2|
+|config|ip access-list standard <ACL名>|名前付き標準ACLの作成.config→config-std-nacl|MODE,1|
+|config-std-nacl|[<シーケンス番号>] <permit\|deny> <送信元IPアドレス> <ワイルドカードマスク>|名前付き標準ACLの条件設定(シーケンス番号:任意or指定がないと10,20,30,...)|2|
+|config-if|ip access-group <ACL番号\|ACL名> <in\|out>|作成した標準ACLを(宛先に近い)インターフェイスに適用|※,(3)|
+|config-line|access-class <ACL番号\|ACL名> <in\|out>|リモートアクセス制御の設定|※,(3)|
+|#|show access-lists [<ACL番号\|ACL名>]|作成されたACLの確認|SHOW,※C|
+|config|no access-list [<ACL番号\|ACL名>]|ACLの削除.番号付きACLはすべてのエントリが消えるので注意|-|
+
+### IPv4の拡張ACL
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------| 
+|config|access-list <ACL番号> <permit\|deny> <プロトコル> <送信元IPアドレス> <ワイルドカードマスク> [<送信元ポート番号>] <宛先IPアドレス> <ワイルドカードマスク> [<オプション>]|番号付き拡張ACLの作成.(ACL番号:100-199,2000-2699)(プロトコル:ip,tcp,udp,icmp等)|1,2|
+|config|ip access-list extended <ACL名>|名前付き拡張ACLの作成.config→config-ext-nacl|MODE,1|
+|config-ext-nacl|<シーケンス番号> <permit\|deny> <プロトコル> <送信元IPアドレス> <ワイルドカードマスク> [<送信元ポート番号>] <宛先IPアドレス> <ワイルドカードマスク> [<オプション>]|拡張番号付きACLの条件設定|2|
+|config-if|ip access-group <ACL番号\|ACL名> <in\|out>|作成した標準ACLを(送信元に近い)インターフェイスに適用|※,(3)|
+
+|プロトコル|オプション例|説明|
+|---------|-----------|----|
+|ip|dscpなど|IPに関する項目|
+|tcp|eq 80など|eq(等しい)、neq(等しくない)、It(小さい)、gt(大きい).数字はポート番号で名称でも可|
+|udp|eq 161など|tcpと同様の指定の仕方|
+|icmp|echo(エコー要求), echo-reply(エコー応答)など|ICMPのメッセージのタイプ|
 
 
 ## 第章
