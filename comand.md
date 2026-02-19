@@ -1,6 +1,6 @@
 # コマンド一覧
 
-## モード
+## 補足
 |モード名|プロンプト|下表での記載方法|
 |-------|---------|---------------|
 |ユーザEXECモード|>|>|
@@ -10,13 +10,47 @@
 |ルーティングコンフィギュレーションモード|(config-router)#|config-router|
 |ラインコンフィギュレーションモード|(config-line)#|config-line|
 
+### 分類、補足の項
+MODE:モード切替のコマンド
+SHOW:設定を確認するコマンド
+1,2,...:流れで覚えるコマンド, その間に別の操作が必要な場合は()で表記
+※:モードに注意
+
 
 ## 第2章 Ciscoルータの初期設定
-
+### Ciscoルータの操作の基本
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|>|enable|ユーザEXEC→特権EXEC|-|
-|
+|>|enable|ユーザEXEC→特権EXEC|MODE|
+|#|disable|特権EXEC→ユーザEXEC|MODE|
+|#|configure terminal|特権EXEC→config|MODE|
+|-|end|様々な設定モード→特権EXEC|MODE|
+|-|exit|ひとつ前のモードに戻る|MODE|
+|#|show <確認したい項目>|設定を確認|SHOW|
+|#|copy running-config startup-config|running-configの内容をstartup-configに保存|-|
+|#|erase startup-config|startup-configを削除(初期化)|-|
+|#|reload|ルータを再起動(初期化に必要)|-|
+
+### Ciscoルータの基本設定
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|hostname <ホスト名>|ホスト名(機器の名前)を変更|-|
+|config|line console 0|config→config-line|MODE, 1|
+|config-line|password <パスワード>|パスワードを設定|2|
+|config-line|login|パスワード認証を有効化|3|
+|config|enable password <パスワード>|イネーブルパスワードの設定|-|
+|config|line vty <開始ライン番号> [<終了ライン番号>]|VTYパスワードの設定|-|
+|config|username <ユーザ名> [privilege <特権レベル> ] password <パスワード>|ユーザアカウントの作成|1|
+|config-line|login local|ユーザアカウントを使用して認証(認証方法を変更)|(2),※|
+
+
+### showコマンドのパイプを用いた検索機能
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|show <調べたい内容> \| begin <指定する内容>|一致した行から表示を開始|SHOW| 
+|config|show <調べたい内容> \| exclude <指定する内容>|一致した行を表示しない|SHOW|
+|config|show <調べたい内容> \| include <指定する内容>|一致した行のみを表示|SHOW|
+|config|show <調べたい内容> \|section <指定する内容>|一致したセクションを表示|SHOW|
 
 
 ## 第章
