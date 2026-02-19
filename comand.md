@@ -99,10 +99,28 @@ SHOW:設定を確認するコマンド
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config|router ospf <プロセスID>|OSPF(ダイナミックルーティング)の有効化(ID:1-65535を設定可).config→config-router|MODE|
+|config-router|network <IPアドレス> <ワイルドカードマスク> area <エリアID>|IPアドレスの範囲に含まれるインターフェイスでOSPFを有効化|-|
+|config-if|ip ospf <プロセスID> area <エリアID>|インターフェイスごとに個別にOSPFを有効化|-|
+|config-router|passive-interface <インターフェイス>|パッシブインターフェイス(Helloパケットを送信しない)の設定|※|
+|config-router|router-id <ルータID>|ルータID(形式はIPアドレスと同じ)を手動で設定|※|
+|config|interface Loopback <番号>|ループバックインターフェース(仮想的なインターフェイス)の作成(番号0-2,147,483,647を設定可)|※|
+|config-if|ip ospf network <broadcast \|non-broadcast\|point-to-multipoint[non broadcast]\|point-to-point>|インターフェイスのネットワークタイプの変更(p211)|※|
+|#|show ip ospf neighbor|ネイバーテーブルの確認|SHOW|
+|#|show ip ospf database|LSDBの要約情報(LSAのリスト)であるトポロジテーブルの確認|SHOW|
+|#|show ip protocols|OSPFのプロトコルの情報(上のコマンドで設定した内容)の確認|SHOW|
+|#|show ip ospf interface [<インターフェイス>]|OSPFが動作しているインターフェイスの情報の確認|SHOW|
+|config-if|ip ospf priority <ルータプライオリティ値>|ルータプライオリティの変更|-|
+|config-if|ip ospf cost <コスト値>|コスト(OSPFのメトリック)の変更|-|
+|config-if|bandwidth <帯域幅>|コストの計算に用いる帯域幅の変更(単位:Kbps)|-|
+|config-if|ip ospf hello-interval <秒数>|Helloインターバルの変更(自動でDeadインターバルが4倍の時間に設定される)|-|
+|config-if|ip ospf dead-interval <秒数>|Deadインターバルのみを変更|-|
+|config-if|ip ospf mtu-ignore|MTUの不一致を検出する機能を無効にする|-|
+|config-router|default-information originate [always]|設定したデフォルトルートをOSPFで他のルータに配布するように設定|-|
 
 
-## 第章
+
+## 第5章 ACL
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
