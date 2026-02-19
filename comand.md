@@ -31,6 +31,15 @@ SHOW:設定を確認するコマンド
 |#|erase startup-config|startup-configを削除(初期化)|-|
 |#|reload|ルータを再起動(初期化に必要)|-|
 
+### showコマンドのパイプを用いた検索機能
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|show <調べたい内容> \| begin <指定する内容>|一致した行から表示を開始|SHOW| 
+|config|show <調べたい内容> \| exclude <指定する内容>|一致した行を表示しない|SHOW|
+|config|show <調べたい内容> \| include <指定する内容>|一致した行のみを表示|SHOW|
+|config|show <調べたい内容> \|section <指定する内容>|一致したセクションを表示|SHOW|
+
+
 ### Ciscoルータの基本設定
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
@@ -39,18 +48,30 @@ SHOW:設定を確認するコマンド
 |config-line|password <パスワード>|パスワードを設定|2|
 |config-line|login|パスワード認証を有効化|3|
 |config|enable password <パスワード>|イネーブルパスワードの設定|-|
+|config|enable secret <パスワード>|イネーブルパスワードの暗号化(こちらの方が優先)|-|
 |config|line vty <開始ライン番号> [<終了ライン番号>]|VTYパスワードの設定|-|
-|config|username <ユーザ名> [privilege <特権レベル> ] password <パスワード>|ユーザアカウントの作成|1|
+|config|username <ユーザ名> [privilege <特権レベル> ] password <パスワード>|ユーザアカウントの作成|1,※|
 |config-line|login local|ユーザアカウントを使用して認証(認証方法を変更)|(2),※|
+|config|service password-encryption|パスワード全体を暗号化|-|
+|config-line|exec-timeout <分> [<秒>]|自動ログアウトの設定|-|
 
-
-### showコマンドのパイプを用いた検索機能
+### SSHの設定
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config|show <調べたい内容> \| begin <指定する内容>|一致した行から表示を開始|SHOW| 
-|config|show <調べたい内容> \| exclude <指定する内容>|一致した行を表示しない|SHOW|
-|config|show <調べたい内容> \| include <指定する内容>|一致した行のみを表示|SHOW|
-|config|show <調べたい内容> \|section <指定する内容>|一致したセクションを表示|SHOW|
+|config|hostname <ホスト名>|ホスト名(機器の名前)を変更|1|
+|config|ip domain-name <ドメイン名>|ドメイン名を設定|2|
+|config|crypto key generate rsa [modulus <暗号鍵サイズ]|RSA暗号鍵の生成|3|
+|config|username <ユーザ名> [privilege <特権レベル> ] password <パスワード>|ユーザアカウントの作成|4|
+|config-line|login local|ユーザアカウントを使用して認証(認証方法を変更)|(5),※|
+|config-line|transport input <telnet\|ssh\|all\|none>|SSHの接続許可の設定(SSH推奨)|6|
+|config|ip ssh version <1\|2>|SSHのバージョンの設定(2推奨)|7|
+
+### ルータへのIPアドレスの設定
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|interface <タイプ> <インターフェイス番号>|config→config-if.タイプはEthernetやFastEthernetなど(p133).show runで確認|MODE,1|
+|config-if|ip address <IPアドレス> <サブネットマスク>|IPアドレスの設定|2|
+|config-if|no shutdown|インターっフェイスの有効化|3|
 
 
 ## 第章
