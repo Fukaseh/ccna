@@ -10,7 +10,8 @@
 |ルーティングコンフィギュレーションモード|(config-router)#|config-router|
 |ラインコンフィギュレーションモード|(config-line)#|config-line|
 |標準ACLコンフィギュレーションモード|(config-std-nacl)#|config-std-nacl|
-|拡張ACLコンフィギュレーションモード|c(config-ext-nacl)#|config-ext-nacl|
+|拡張ACLコンフィギュレーションモード|(config-ext-nacl)#|config-ext-nacl|
+|DHCPコンフィギュレーションモード|(dhcp-config)#|dhcp-config|
 
 ### 分類、補足の項
 |分類、補足|説明|
@@ -153,11 +154,38 @@
 |icmp|echo(エコー要求), echo-reply(エコー応答)など|ICMPのメッセージのタイプ|
 
 
-## 第章
+## 第6章 NAT・DHCP・DNS
+### NAT
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config-if|ip nat <inside\|outside>|NATでルータのインターフェイスにインサイドか会おうと再度を指定|※,1|
+|config|ip nat inside source static <内部ローカルアドレス> <内部グローバルアドレス>|NATテーブルにアドレスの組み合わせを登録(スタティックNAT,手動)|(2)|
+|#|show ip nat translations|NATテーブルの確認|SHOW|
+|#|show ip nat statistics|NATによるアドレス変換の統計情報の確認|SHOW|
+|#|debug ip nat|NATの変換情報のリアルタイム確認|
+|config|ip nat pool <プール名> <開始アドレス> <終了アドレス> <netmask <サブネットマスク>\|prefix-length <プレフィックス>|ダイナミックNATでアドレスプールを作成する(同時に、変換の対象となる内部ローカルアドレスのリストをACLで作成しておく)|(2)|
+|config|ip nat inside source list <ACL> pool <プール名>|内部ローカルアドレスのリストとアドレスプールを紐づける|3|
+|config|ip nat inside source list <ACL> <pool <プール名> \| interface <インターフェイス>> overload|NAPT(PAT)で内部ローカルアドレス斗アドレスプールまたは外部インターフェースを紐づける(overloadを忘れない)|※C,3|
+|#|clear ip nat translation *|NATテーブルの削除|-|
+
+### DHCP
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|ip dhcp pool <プール名>|DHCPサーバ設定のためのアドレスプール作成.config→dhcp-config|MOVE,1|
+|dhcp-config|network <ネットワーク> <サブネットマスク\|プレフィックス>|DHCPプールで使用(配布)するIPアドレスのネットワークとサブネットマスクを指定|2|
+|dhcp-config|default-router <IPアドレス>|DHCPクライアントにデフォルトゲートウェイのIPアドレスを設定|3|
+|dhcp-config|lease <日にち> [<時間>[<分>]]|リース期間(IPアドレスを貸し出す期間)の指定(半分を過ぎるとクライアントが延長を要求)|4|
+|dhcp-config|dhs-sever <DNSサーバのIPアドレス1> [<DNSサーバのIPアドレス2>]|DNSサーバの指定.左のDNSサーバから順に優先度が高い|5(not必須)|
+|dhcp-config|domain-name <ドメイン名>|ドメイン名の指定|※,6(not必須)
+|config-if|ip address dhcp|DHCPクライアントに設定|-|
+|#|show ip dhcp pool|DHCPサーバで設定したアドレスプールの確認|SHOW|
+|#|show ip dhcp binding|DHCPサーバによるIPアドレスの割当状況の確認|SHOW|
+|#|show ip dhcp conflict|コンフリクトが発生したIPアドレスの一覧を確認|SHOW|
+|#|clear ip dhcp conflict *|コンフリクトによって割当不可となったIPアドレスを情報を消去して再度配布できるようにする|-|
+|#|show dhcp lease|DHCPサーバのIPアドレスやリース期間などのより詳しい内容を表示|SHOW|
+|config-if|ip helper-address <DHCPサーのIPアドレス>|DHCPリレーエージェント(異なるネットワーク上に配置されたDHCPのメッセージを転送する機能)の設定|-|
+
 
 
 ## 第章
