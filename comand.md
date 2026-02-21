@@ -176,7 +176,7 @@
 |dhcp-config|network <ネットワーク> <サブネットマスク\|プレフィックス>|DHCPプールで使用(配布)するIPアドレスのネットワークとサブネットマスクを指定|2|
 |dhcp-config|default-router <IPアドレス>|DHCPクライアントにデフォルトゲートウェイのIPアドレスを設定|3|
 |dhcp-config|lease <日にち> [<時間>[<分>]]|リース期間(IPアドレスを貸し出す期間)の指定(半分を過ぎるとクライアントが延長を要求)|4|
-|dhcp-config|dhs-sever <DNSサーバのIPアドレス1> [<DNSサーバのIPアドレス2>]|DNSサーバの指定.左のDNSサーバから順に優先度が高い|5(not必須)|
+|dhcp-config|dns-sever <DNSサーバのIPアドレス1> [<DNSサーバのIPアドレス2>]|DNSサーバの指定.左のDNSサーバから順に優先度が高い|5(not必須)|
 |dhcp-config|domain-name <ドメイン名>|ドメイン名の指定|※,6(not必須)
 |config-if|ip address dhcp|DHCPクライアントに設定|-|
 |#|show ip dhcp pool|DHCPサーバで設定したアドレスプールの確認|SHOW|
@@ -186,13 +186,21 @@
 |#|show dhcp lease|DHCPサーバのIPアドレスやリース期間などのより詳しい内容を表示|SHOW|
 |config-if|ip helper-address <DHCPサーのIPアドレス>|DHCPリレーエージェント(異なるネットワーク上に配置されたDHCPのメッセージを転送する機能)の設定|-|
 
+### DNS
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|ip domain-lookup|DNSルックアップの有効化(DNSクライアントとして動作)|-|
+|config|ip name-server <DNSサーバのIPアドレス1> [<DNSサーバのIPアドレス2>]|DNSサーバのIPアドレスの設定(最大6つまで)|-|
+|config|ip host <ホスト名> <IPアドレス1> [<IPアドレス2>]|手動でホスト名とIPアドレスの組み合わせを登録|-|
+|config|ip domain-name <ドメイン名>|手動でドメイン名の設定|-|
+|#|show hosts|ルータが保持している静的・動的なDNS情報の確認|SHOW|
 
 
-## 第章
+## 第7章 Catalystスイッチの基本設定斗VLAN
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config|interface vlan 1|管理インターフェースでconfig-ifに移動するconfig→config-if.
 
 
 ## 第章
