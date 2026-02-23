@@ -12,7 +12,8 @@
 |標準ACLコンフィギュレーションモード|(config-std-nacl)#|config-std-nacl|
 |拡張ACLコンフィギュレーションモード|(config-ext-nacl)#|config-ext-nacl|
 |DHCPコンフィギュレーションモード|(dhcp-config)#|dhcp-config|
-|vlaNコンフィギュレーションモード|(config-vlan)#|config-vlan|
+|VLANコンフィギュレーションモード|(config-vlan)#|config-vlan|
+|サブインターフェイスコンフィギュレーションモード|(config-subif)#|config-subif|
 
 ### 分類、補足の項
 |分類、補足|説明|
@@ -225,9 +226,21 @@
  switchport|現在のスイッチポートの状態を確認|SHOW|
  |#show interfaces status|スイッチのインターフェイスの状態を確認|SHOW|
  |#|show mac address-table|スイッチのMACアドレステーブルを確認.macとaddressの間は-でも可|SHOW|
+ config|vtp domain <ドメイン名>|VTPを有効化してVTPドメイン名を設定.同期を行うスイッチ間で一致の必要あり|1|
+ |config|vtp mode <server\|client\|transparent>|VTPの動作モードを変更|2|
+ |config|vtp version <VTPバージョン>|VTPのバージョンを指定(VTPバージョン:1-3)同期を行うスイッチ間で一致の必要あり|
+ |#|show vtp status|VTPの設定を確認|3|
+ ### VTP(ルータ側)
+ |config|interface <インターフェイス>.<論理番号>|ルータにサブインターフェイス(仮想のインターフェイス.VLAN間ルーティング等で用いる)の作成.config→config-subif|MODE,1|
+ |config-subif|encapsulation <dot1q|isl> <VLAN番号> [native]|サブインターフェイスのトラッキングプロトコルの指定.スイッチと一致させる.ネイティブVLAN用のサブインターフェイスのときはnativeを入力|2|
+ ### レイヤ3スイッチ
+ |config|interface vlan <VLAN番号>|VLAN用のSVI(スイッチの仮想のインターフェイス)を作成.config→config-if.この後IPアドレスを設定する|MODE|
+ |config|ip routing|ルーティングの有効化|※|
+|config-if|no switchport|ルーテッドポート(レイヤ3スイッチの物理ポートをルータのインターフェイスとして動作)|-|
+|config-if|switchport|ルーテッドポートをスイッチポートに戻す|-|
  
 
-## 第章
+## 第8章 STP
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
