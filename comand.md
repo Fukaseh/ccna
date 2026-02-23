@@ -12,6 +12,7 @@
 |標準ACLコンフィギュレーションモード|(config-std-nacl)#|config-std-nacl|
 |拡張ACLコンフィギュレーションモード|(config-ext-nacl)#|config-ext-nacl|
 |DHCPコンフィギュレーションモード|(dhcp-config)#|dhcp-config|
+|vlaNコンフィギュレーションモード|(config-vlan)#|config-vlan|
 
 ### 分類、補足の項
 |分類、補足|説明|
@@ -200,8 +201,31 @@
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config|interface vlan 1|管理インターフェースでconfig-ifに移動するconfig→config-if.
-
+|config|interface vlan 1|管理インターフェースでconfig-ifに移動するconfig→config-if.(デフォルトはvlan1が管理VLAN).IPアドレスを設定することも可.|MODE|
+|config|ip default-gateway <デフォルトゲートウェイのIPアドレス>|スイッチでデフォルトゲートウェイを設定|-|
+|config|vlan <VLAN番号>|VLANの作成.config→config-vlan(VLAN番号:1-4094(標準VLANなら1-1001を指定))|MODE,1|
+|config-vlan|name <VLAN名>|VLANに名前を設定(指定しないとVLANxxxx(xxxxはVLAN番号))|2|
+|config-vlan|<exit\|end>|config-vlanを終了することで設定を確定|3|
+|config|no vlan <VLAN番号>|VLANの削除|-|
+|config|interface <インターフェイス>|アクセスポートの設定のためにconfig-ifに|1|
+|config\if|switchport mode access|インターフェイスのモードをアクセスに設定|※,2|
+|config-if|switchport access vlan <VLAN番号>|所属するVLANを指定|-|
+|config|interface <インターフェイス>|トランクポートの設定のためにconfig-ifに|1|
+|config-if|switchport trunk encapsulation <dot1q\|isl>|トランキングプロトコルの種類を設定(ISLがサポートされていないなら省略)|2|
+|config-if|switchport mode trunk|インターフェイスのモードをトランクに設定|3|
+|config-if|switchport trunk native vlan <VLAN番号>|インターフェイスのネイティブVLAN(タグをつけずにそのまま送信する相手)を変更する(任意)|4|
+|config-if|switchport trunk allowed vlan [add|all|noe|except|remove] <VlAN番号>|許可VLANを変更.オプションを指定しないと指定したVLANのみ許可.オプションは現状から指定した内容に従って更新|5|
+|config-if|switchport mode dynamic <auto|desirable>|DTPのネゴシエーションで自動でアクセスかトランクか決定させる|-|
+|config-if|switchport nonegotiate|DTPフレームの停止(相手が手動でtrunkモードにしているとき等)|-|
+|config-if|switchport voice vlan <VLAN番号>|音声VLANの設定(アクセスポートとして設定される)|-|
+|#|show vlan [brief]|現在スイッチで作成されているVLANの確認.トランクポートは表示されない|SHOW|
+|#|show vlan id <VLAN番号>|特定のVLANの情報を確認.トランクポートも表示される|SHOW|
+|#|show interfaces [<インターフェース>] trunk|トランクポートとなっているインターフェイスをすべて表示|※C,SHOW|
+|#|show interfaces [<インターフェイス>]
+ switchport|現在のスイッチポートの状態を確認|SHOW|
+ |#show interfaces status|スイッチのインターフェイスの状態を確認|SHOW|
+ |#|show mac address-table|スイッチのMACアドレステーブルを確認.macとaddressの間は-でも可|SHOW|
+ 
 
 ## 第章
 
