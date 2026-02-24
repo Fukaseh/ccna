@@ -233,9 +233,13 @@
  |config|vtp version <VTPバージョン>|VTPのバージョンを指定(VTPバージョン:1-3)同期を行うスイッチ間で一致の必要あり|
  |#|show vtp status|VTPの設定を確認|3|
  ### VTP(ルータ側)
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
  |config|interface <インターフェイス>.<論理番号>|ルータにサブインターフェイス(仮想のインターフェイス.VLAN間ルーティング等で用いる)の作成.config→config-subif|MODE,1|
  |config-subif|encapsulation <dot1q|isl> <VLAN番号> [native]|サブインターフェイスのトラッキングプロトコルの指定.スイッチと一致させる.ネイティブVLAN用のサブインターフェイスのときはnativeを入力|2|
  ### レイヤ3スイッチ
+ |モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
  |config|interface vlan <VLAN番号>|VLAN用のSVI(スイッチの仮想のインターフェイス)を作成.config→config-if.この後IPアドレスを設定する|MODE|
  |config|ip routing|ルーティングの有効化|※|
 |config-if|no switchport|ルーテッドポート(レイヤ3スイッチの物理ポートをルータのインターフェイスとして動作)|-|
@@ -253,7 +257,7 @@
 |config|spanning-tree vlan <VLAN番号> priority <プライオリティ>|ブリッジプライオリティの変更(ルートブリッジを変更するため)(プライオリティ:4096の倍数,最小値0,表示はVLAN番号を足した数字となる)|-|
 |config|spanning-tree vlan <VLAN番号> root primary|ダイナミックにルートブリッジを選出(指定したVLAN上のルートブリッジよりも4096小さい値をプライオリティに)|-|
 |config-if|spanning-tree vlan <VLAN番号> cost <パスコスト値>|VLANごとにパスコスト値を指定|※|
-|config|spanning-tree pathcost method <shot_|long>|パスコストのデフォルト値の変更。100Gbps以上の帯域のリンクを使用しているならロング法推奨(ショート法はすべて1になる)|-|
+|config|spanning-tree pathcost method <shot\|long>|パスコストのデフォルト値の変更。100Gbps以上の帯域のリンクを使用しているならロング法推奨(ショート法はすべて1になる)|-|
 |config-if|spnanning-tree vlan <VLAN番号> port-priority <プライオリティ>|ポートIDのポートプライオリティの変更|
 
 ### PortFast,BPDUガード,ルートガード,タイマー,RSTP
@@ -300,12 +304,17 @@
 |#|show ipv6 route|IPv6のルーティングテーブルを確認|SHOW|
 
 
-## 第章
-
+## 第11章 その他のIPサービスと運用
+### HSRP
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
-
+|config-if|standby [<スタンバイグループ番号>] ip [<仮想IPアドレス>]|HSRPの有効化(スタンバイグループ番号:0-255,省略したら0)(仮想IPアドレスはルータに設定されているIPアドレスは設定できない)|-|
+|config-if|standby [<スタンバイグループ番号>] priority <プライオリティ値>|HSRPプライオリティ値の変更(プライオリティ値:0-255,デフォルト100)|-|
+|config-if|standby [<スタンバイグループ番号>] preempt|プリエンプト(常にプライオリティ値の大きいルータを置くてぃぶルータとする機能)の有効化|-|
+|config-if|standby [<スタンバイグループ番号>] track<インターフェイス> [<減少値>]|インターフェイストラッキング(インターフェイスがdownすると<減少値>だけHSRPプライオリティ値を減少させる機能)を有効化(減少値:デフォルト10)|-|
+|#|show standby brief|HSRPの要約情報を確認|SHOW|
+|#|show standby|HSRPの詳細情報を確認|SHOW|
+|-|arp -a|WindowsでクライアントPCのARPテーブルを確認(pingコマンドとtracertコマンド実行後)|(1)|
 
 ## 第章
 
