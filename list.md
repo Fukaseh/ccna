@@ -49,4 +49,7 @@
 
 ## Cisco独自or標準化
 |Cisco独自|標準化|説明|
-|ISL|IEEE 802.1Q|トランキングプロトコル(トランクリンクでVLANを識別するためにVLANにタグを付加するプロトコル)
+|--------|------|----|
+|ISL|IEEE 802.1Q|トランキングプロトコル(トランクリンクでVLANを識別するためにVLANにタグを付加するプロトコル)|
+|PAgP|LACP(IEE 802.3ad)|EtherChannelのネゴシエーション。PAgPはdesirable or auto.LaCPはactive or passive.|
+

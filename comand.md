@@ -14,6 +14,7 @@
 |DHCPコンフィギュレーションモード|(dhcp-config)#|dhcp-config|
 |VLANコンフィギュレーションモード|(config-vlan)#|config-vlan|
 |サブインターフェイスコンフィギュレーションモード|(config-subif)#|config-subif|
+|インターフェイスコンフィギュレーションモード|(config-if-range)#|config-if-range|
 
 ### 分類、補足の項
 |分類、補足|説明|
@@ -46,6 +47,7 @@
 |config|show <調べたい内容> \| exclude <指定する内容>|一致した行を表示しない|SHOW|
 |config|show <調べたい内容> \| include <指定する内容>|一致した行のみを表示|SHOW|
 |config|show <調べたい内容> \|section <指定する内容>|一致したセクションを表示|SHOW|
+
 
 
 ### Ciscoルータの基本設定
@@ -270,12 +272,18 @@
 |config|spanning-tree mode <pvst\|rapid-pvst>|動作モードをSTPからRSTPに変更(デフォルト:PVST+)
 
 
-## 第章
+## 第9章 EtherChannel
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
-
+|config-if|channel-group <ループ番号> mode <on\|desirable\|active\|passive>|EtherChannelを形成する.グループ番号は字スイッチ内でそろえる必要はあるが、対向のスイッチと合わせる必要はない|-|
+|config-if|channel-protocol <lacp\|pagp>|ネゴシエーションを行うプロトコルを指定.上のコマンドで自動で決まるので実行しなくてもいいが、先に実行することでミスを減らせる|-|
+|config|port-channel load-balance <負荷分散方法>|EtherChannelでの負荷分散の方法を変更.<負荷分散方法>でsrcなら送信元,dstなら宛先で、後ろは何を基に負荷分散するかを表す|-|
+|config|interface range <インターフェイス>|複数のポートに同じ設定をまとめて行う.config→config-if-range|MODE|
+|config-if|port-channel min-links <最小ポート数>|LACPでPort-chanelインターフェイスがリンクアップするための最小リンク数を指定|-|
+|#|show etherchannel [<summary\|detail>]|EtherChannelの情報の確認|SHOW|
+|#show etherchannel load-balance|現在EtherChannelで設定されている負荷分散方法の設定|SHOW|
+|#|show <pagp\|lacp> neighbor|隣接するスイッチのポートの各種情報を確認|SHOW|
 
 ## 第章
 
