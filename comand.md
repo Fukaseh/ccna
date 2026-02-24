@@ -112,7 +112,7 @@
 |config-if|ip ospf <プロセスID> area <エリアID>|インターフェイスごとに個別にOSPFを有効化|-|
 |config-router|passive-interface <インターフェイス>|パッシブインターフェイス(Helloパケットを送信しない)の設定|※|
 |config-router|router-id <ルータID>|ルータID(形式はIPアドレスと同じ)を手動で設定|※|
-|config|interface Loopback <番号>|ループバックインターフェース(仮想的なインターフェイス)の作成(番号0-2,147,483,647を設定可)|※|
+|config|interface Loopback <番号>|ループバックインターフェイス(仮想的なインターフェイス)の作成(番号0-2,147,483,647を設定可)|※|
 |config-if|ip ospf network <broadcast \|non-broadcast\|point-to-multipoint[non broadcast]\|point-to-point>|インターフェイスのネットワークタイプの変更(p211)|※|
 |#|show ip ospf neighbor|ネイバーテーブルの確認|SHOW|
 |#|show ip ospf database|LSDBの要約情報(LSAのリスト)であるトポロジテーブルの確認|SHOW|
@@ -168,7 +168,7 @@
 |#|debug ip nat|NATの変換情報のリアルタイム確認|
 |config|ip nat pool <プール名> <開始アドレス> <終了アドレス> <netmask <サブネットマスク>\|prefix-length <プレフィックス>|ダイナミックNATでアドレスプールを作成する(同時に、変換の対象となる内部ローカルアドレスのリストをACLで作成しておく)|(2)|
 |config|ip nat inside source list <ACL> pool <プール名>|内部ローカルアドレスのリストとアドレスプールを紐づける|3|
-|config|ip nat inside source list <ACL> <pool <プール名> \| interface <インターフェイス>> overload|NAPT(PAT)で内部ローカルアドレス斗アドレスプールまたは外部インターフェースを紐づける(overloadを忘れない)|※C,3|
+|config|ip nat inside source list <ACL> <pool <プール名> \| interface <インターフェイス>> overload|NAPT(PAT)で内部ローカルアドレスとアドレスプールまたは外部インターフェイスを紐づける(overloadを忘れない)|※C,3|
 |#|clear ip nat translation *|NATテーブルの削除|-|
 
 ### DHCP
@@ -202,7 +202,7 @@
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config|interface vlan 1|管理インターフェースでconfig-ifに移動するconfig→config-if.(デフォルトはvlan1が管理VLAN).IPアドレスを設定することも可.|MODE|
+|config|interface vlan 1|管理インターフェイスでconfig-ifに移動するconfig→config-if.(デフォルトはvlan1が管理VLAN).IPアドレスを設定することも可.|MODE|
 |config|ip default-gateway <デフォルトゲートウェイのIPアドレス>|スイッチでデフォルトゲートウェイを設定|-|
 |config|vlan <VLAN番号>|VLANの作成.config→config-vlan(VLAN番号:1-4094(標準VLANなら1-1001を指定))|MODE,1|
 |config-vlan|name <VLAN名>|VLANに名前を設定(指定しないとVLANxxxx(xxxxはVLAN番号))|2|
@@ -221,7 +221,7 @@
 |config-if|switchport voice vlan <VLAN番号>|音声VLANの設定(アクセスポートとして設定される)|-|
 |#|show vlan [brief]|現在スイッチで作成されているVLANの確認.トランクポートは表示されない|SHOW|
 |#|show vlan id <VLAN番号>|特定のVLANの情報を確認.トランクポートも表示される|SHOW|
-|#|show interfaces [<インターフェース>] trunk|トランクポートとなっているインターフェイスをすべて表示|※C,SHOW|
+|#|show interfaces [<インターフェイス>] trunk|トランクポートとなっているインターフェイスをすべて表示|※C,SHOW|
 |#|show interfaces [<インターフェイス>]
  switchport|現在のスイッチポートの状態を確認|SHOW|
  |#show interfaces status|スイッチのインターフェイスの状態を確認|SHOW|
@@ -241,10 +241,33 @@
  
 
 ## 第8章 STP
+### STP
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|#|show spanning-tree [vlan <VLAN番号>]|STPの状態を確認|SHOW|
+|#|show spanning-tree interface <インターフェイス>|STPがどう咲いているインターフェイス(ポート)の状態を確認|-|
+|#|debug spanning-tree events|STPの動作の確認を開始する|-|
+|#|no debug spanning-tree evets|STPの動作の確認の停止|-|
+|config|spanning-tree vlan <VLAN番号> priority <プライオリティ>|ブリッジプライオリティの変更(ルートブリッジを変更するため)(プライオリティ:4096の倍数,最小値0,表示はVLAN番号を足した数字となる)|-|
+|config|spanning-tree vlan <VLAN番号> root primary|ダイナミックにルートブリッジを選出(指定したVLAN上のルートブリッジよりも4096小さい値をプライオリティに)|-|
+|config-if|spanning-tree vlan <VLAN番号> cost <パスコスト値>|VLANごとにパスコスト値を指定|※|
+|config|spanning-tree pathcost method <shot_|long>|パスコストのデフォルト値の変更。100Gbps以上の帯域のリンクを使用しているならロング法推奨(ショート法はすべて1になる)|-|
+|config-if|spnanning-tree vlan <VLAN番号> port-priority <プライオリティ>|ポートIDのポートプライオリティの変更|
+
+### PortFast,BPDUガード,ルートガード,タイマー,RSTP
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config|spanning-tree portfast default|PortFastをアクセスポートすべてで有効にする|※|
+|config-if|spanning-tree portfast [trunk]|インターフェイスごとにPortFastを有効に(トランクポートはtrunkをつける)|-|
+|config|spanning-tree portfast bpdugurard default|PortFastの設定が行われているポートすべてでBPDUガードを有効化|※|
+|config-if|spanning-tree bpduguard <enable\|disable>|インターフェイスでBPDUガードを有効/無効にする|-|
+|config-if|spanning-tree guard root|ルートガード(既存のルートブリッジよりブリッジIDが小さなスイッチが接続されてもSTPのトポロジを変えない)の有効化|※|
+|config-if|no spanning-tree guard root|ルートガードの無効化|-|
+|config|spanning-tree vlan <VLAN番号> hello-time <秒数>|Helloタイマー(BPDUを送信する時間)を変更.(デフォルト:2秒)|-|
+|config|spanning-tree vlan <VLAN番号> max-age <秒数>|最大エージタイマー(最後に受け取ったBPDUを保持する期間)の変更(デフォルト:20秒)|-|
+|config|spanning-tree vlan <VLAN番号> forward-time <秒数>|転送遅延タイマー(リスニングとラーニングの状態に留まる時間)の変更(デフォルト:15秒)|-|
+|config|spanning-tree mode <pvst\|rapid-pvst>|動作モードをSTPからRSTPに変更(デフォルト:PVST+)
 
 
 ## 第章
