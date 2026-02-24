@@ -316,6 +316,20 @@
 |#|show standby|HSRPの詳細情報を確認|SHOW|
 |-|arp -a|WindowsでクライアントPCのARPテーブルを確認(pingコマンドとtracertコマンド実行後)|(1)|
 
+### SNMP
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|snmp-server view <ビュー名> <MIB名> <include\|exclude>|SNMPビュー(特定のMIB情報だけをSNMPマネージャから取得させる/させない機能)を作成|-|
+|config|snmp-server community <コミュニティ名> [view <ビュー名>] [ro\|rw] [<ACL>]|コミュニティ名を設定(認証のため).コミュニティ名はSNMPマネージャとSNMPエージェントで合わせておく.ACLオプションでACLのpermitで指定されているアドレスの要求のっみ受け付ける|-|
+|config|snmp-server host <IPアドレス> [traps\|informs] [version <1\|2c\|3 <auth \|noauth\|priv>>] <コミュニティ名\|ユーザ名>|SNMPの通知機能の設定のためにSNMPマネージャの指定.(IPアドレス:送信先).通知の種類はSNMPv1はtrapsのみ,SNMPv2cやSNMPv3はinformsも可.v3はセキュリティレベルも指定.(v1,v2c→コミュニティ名,v3→ユーザ名.)|1|
+|config|snmp-server enable traps [<トラップ対象>]|SNMPトラップ、SNMP院フォームを両方有効化.(トラップ対象:省略するとすべてが対象)|2|
+|config|snmp-server group <グループ名> v3 <auth\|noauth\|priv> [read <ビュー名>] [write <ビュー名>] [access <ACL>]|SNMPv3でグループ単位で設定するためにSNMPグループを作成|1|
+|config|snmp-server user <ユーザ名> <グループ名> v3 [auth <md5\|sha> <パスワード> [priv <des\|3des\|aes <128\|192\|256>>]]|SNMPユーザをSNMPグループと関連付けながら作成|2|
+|#|show snmp view|SNMPビューの確認|-|
+|#|show snmp group|SNMPグループの確認|-|
+|#|show snmp user|SNMPユーザの情報の確認|
+
+
 ## 第章
 
 |モード|コマンド|説明|分類、補足|

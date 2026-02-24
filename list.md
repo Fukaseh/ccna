@@ -12,7 +12,8 @@
 |69|TFTP|UDP|ファイルの転送|
 |80|HTTP|TCP|WebブラウザとWebサーバの通信|
 |110|POP3|TCP|メールを受信|
-|161|SNMP|UDP|ネットワーク機器を監視・管理|
+|161|SNMP|UDP|ネットワーク機器を監視・管理(SNMPマネージャ→SNMPエージェント)|
+|162|SNMP|UDP|SNMPエージェント→SNMPマネージャ|
 |443|HTTPS|TCP|HTTPをSSLで暗号化|
 |-|RTP|UDP|IP電話などのリアルタイム通信。ポートはアプリケーションが定める|
 
