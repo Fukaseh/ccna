@@ -285,11 +285,19 @@
 |#show etherchannel load-balance|現在EtherChannelで設定されている負荷分散方法の設定|SHOW|
 |#|show <pagp\|lacp> neighbor|隣接するスイッチのポートの各種情報を確認|SHOW|
 
-## 第章
+## 第10章 IPv6
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config|ipv6 unicast-routing|ルータでIPv6ルーティングを有効化|
+|config-if|ipv6 enable|インターフェイスでIPv6を有効にしてリンクローカルユニキャストアドレスを自動で設定|-|
+|config-if|ipv6 address <アドレス> link-local|手動でリンクローカルユニキャストアドレスを設定(アドレス:FE80で始まる)|-|
+|config-if|ipv6 address <アドレス>/<プレフィックス長> [eui-64]|グローバルユニキャストアドレスを設定.インターフェースIDをEUI-64形式のアドレスで設定する場合eui-64が必要|-|
+|config-if|ipv6 address dhcp|ルータのインターフェイスをDHCPv6クラアントとして動作させ，DHCPv6サーバからアドレスを取得|-|
+|show ipv6 <インターフェース>|インターフェイスのIPv6アドレスを確認|SHOW|
+|config|ipv6 route <プレフィックス>/<プレフィックス長> <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|IPv6でのスタティックルートの設定|-|
+|config|ipv6 route ::/0 <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|IPv6でデフォルトルートの設定|-|
+|#|show ipv6 route|IPv6のルーティングテーブルを確認|SHOW|
 
 
 ## 第章
