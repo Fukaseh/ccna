@@ -403,25 +403,39 @@
 |config|banner motd <区切り文字>|バナーメッセージを設定(区切り文字:メッセージを終了する際に入力する文字)|-|
 
 
-## 第章
+## 第13章 ネットワークアーキテクチャ
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config-if|power inline <auto\|never\|static>|PoEの動作モードの変更.autoはネゴシエーションで自動で電力を判断.staticはあらかじめ設定した範囲内で即座に電力値を決定|-|
 
 
-## 第章
-
+## 第14章 セキュリティ
+### ネットワークデバイスの保護
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config|enable algorithm-type <md5\|scrypt\|sha256> secret <パスワード>|イネーブルパスワードの暗号化のアルゴリズムを指定.(md5:従来のenable secret)|-|
+|config|username <ユーザ名> [privilege <特権レベル>] secret <パスワード>|ローカル認証に使用するユーザアカウントパスワードの暗号化(MD5アルゴリズム).ユーザ名1つに対して平文形式化暗号化形式化どちらかしか設定できない(同じ形式のパスワードを上書きは可能)|-|
+|config|username <ユーザ名> [privilege <特権レベル>] algorithm-type <md5\|scrypt\|sha256> secret <パスワード>|ユーザアカウントパスワードをアルゴリズムを指定して暗号化|-|
 
-
-## 第章
-
+### スイッチのセキュリティ機能
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config-if|switchport port-security|ポートセキュリティの有効化(事前に手動でアクセスポート化トランクポートに設定する必要あり)|(1)|
+|config-if|switchport port-security maximum <最大値>|インターフェイスに登録できるセキュアMACアドレスの最大数の変更(デフォルト:1)|-|
+|config-if|switchport port-security mac-address <MACアドレス>|セキュアMACアドレスを手動で登録(登録可能な最大数に達していない場合に限り)(デフォルトで自動的に学習するようにはなっている)|-|
+|config-if|switchport port-security mac-address sticky|スティッキーラーニング(自動登録されたセキュアMACアドレスをrunning-configに残るように)を有効化|-|
+|config-if|switchport port-security violation <restrict\|protect\|shutdown>|セキュリティ違反が起きたときのモードを設定(デフォルト:shutdown)
+|#|show port-security|ポートセキュリティの設定(登録されたセキュアMACアドレスは✕)の確認|SHOW|
+|#|show port-security address|登録されたセキュアMACアドレスを確認|※,SHOW|
+|#|show port-security interface <インターフェス>|インターフェイスごとにポートセキュリティの設定を確認|※,SHOW|
+|config|ip dhcp snooping|DHCPスヌーピング(スイッチの各ポートをtrustとuntrustに分ける)の有効化(VLAN単位では無効となっている)|-|
+|config|ip dhcp snooping vlan <VLAN番号>|DHCPスヌーピングを有効にするVLANの指定(,や-でまとめて指定可)|-|
+|config-if|[no] ip dhcp snooping trust|信頼できる/できないポートの指定(デフォルト:untrust)|-|
+|config|[no] ip dhcp snooping information option|リレーエージェント情報オプション(オプション82)(特定のポートに接続された危機に特定のIPアドレスの割当などの制御を可能にする)の有効化/無効化(デフォルト:有効化)|-|
+|config-if|ip dhcp snooping limit rate <レート>|DHCPパケットの最大受信レート(1s当たりのDHCPパケットの最大数)を指定|-|
+|#|show ip dhcp snooping|DHCPスヌーピングの設定情報確認|SHOW|
+|#|show ip dhcp snooping binding|
 
 
 ## 第章
