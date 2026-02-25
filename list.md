@@ -55,6 +55,7 @@
 |ISL|IEEE 802.1Q|トランキングプロトコル(トランクリンクでVLANを識別するためにVLANにタグを付加するプロトコル)|
 |PAgP|LACP(IEE 802.3ad)|EtherChannelのネゴシエーション。PAgPはdesirable or auto.LaCPはactive or passive.|
 |HSRP,GLBP|VRRP|ルータの冗長化のためのプロトコル|
+|CDP|LLDP(802.1AB)|データリンク層で隣接機器の情報を取得するためのプロトコル|
 
 ## システムログのレベル
 |重要度|意味|説明|

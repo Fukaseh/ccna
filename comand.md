@@ -286,7 +286,7 @@
 |config|interface range <インターフェイス>|複数のポートに同じ設定をまとめて行う.config→config-if-range|MODE|
 |config-if|port-channel min-links <最小ポート数>|LACPでPort-chanelインターフェイスがリンクアップするための最小リンク数を指定|-|
 |#|show etherchannel [<summary\|detail>]|EtherChannelの情報の確認|SHOW|
-|#show etherchannel load-balance|現在EtherChannelで設定されている負荷分散方法の設定|SHOW|
+|#|show etherchannel load-balance|現在EtherChannelで設定されている負荷分散方法の設定|SHOW|
 |#|show <pagp\|lacp> neighbor|隣接するスイッチのポートの各種情報を確認|SHOW|
 
 ## 第10章 IPv6
@@ -351,6 +351,56 @@
 |#|debag ip ospf hello|OSPFのHelloパケットの送受信状況を表示(上の例)|-|
 |#|undebug all/no debug all|すべてのデバッグメッセージの停止|-|
 
+### NTP
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|ntp server <IPアドレス> [prefer]|NTPクライアントとしてNTPサーバと時刻を同期|-|
+|config|ntp master [<stratum値>]|他のNTPサーバと同期できない場合でもstratum値の階層のNTPサーバとして自身のハードウェアクロックを参照して時刻を提供する(stratum値:1-15,デフォルト8)|-|
+|config|ntp authenticate|NTPの認証機能を有効化|1|
+|config|ntp authentication-key <鍵番号> md5 <文字列>|認証鍵を定義(鍵番号:任意)(文字列:8文字まで).NTPサーバとNTPクライアント間でどちらも共通にする|2|
+|config|ntp trusted-key <鍵番号>|NTP認証で使用する鍵番号の指定|3|
+|config|ntp server <IPアドレス> key <鍵番号> [prefer]|時刻同期するNTPサーバに対して鍵番号を指定することで認証を行う(NTPクライアントのみで実行)|4|
+|config|clock timezone <タイムゾーンの略称> <時差>|タイムゾーンの設定(日本:JST 9,デフォルト:UTC)|-|
+|#|clock set <時:分:秒> <日> <月> <年>|手動で時刻を設定|-|
+|#|show clock|ルータ内の現在時刻を表示|SHOW|
+|#|show ntp status|自身のNTPの設定の確認|-|
+|#|show ntp associations|NTPの時刻同期の状態の確認|-|
+
+### CDP・LLDP
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|config|[no] cdp run|機器単位でCDPの有効化/無効化(デフォルト:有効)|-|
+|config-if|[no] cdp enable|CDPインターフェイス単位で有効化/無効化.グローバルに無効化されている状態では有効化できない|-|
+|#|show cdp|CDPが有効かどうか確認|SHOW|
+|#|show cdp interface|CDPが動作するインターフェイスの情報を確認|SHOW|
+|#|show cdp neighbors|CDPで隣接機器から受信した情報の要約情報を確認|SHOW|
+|#|show cdp neighbors detail|CDPで隣接機器から受信した情報の詳細情報を確認|SHOW|
+|#|show cdp entry <*\|機器名>|特定の機器のみの詳細情報を確認|SHOW|
+|config|lldp run|LLDPの有効化(デフォルト:無効)|-|
+|config-if|lldp <transmit\|receive>|インターフェイス単位でLLDPを有効化(transmit:LLDPフレームの送信,receive:LLDPフレームの受信)|-|
+|config|lldp timer <秒数>|LLDPフレームの送信間隔の変更(デフォルト:30s)|-|
+|config|lldp holdtime <秒数>|取得した情報を削除するまでの時間(デフォルト:120s)|-|
+|config|lldp reinit <秒数>|再初期化実行までの遅延時間(初期化を再び実行するまでのクールタイム)(デフォルト:2s)|-|
+|config|lldp tlv-select <TLV名>|送信する自身の情報(TLV形式:Type,Length,Value)の項目を変更(p642)|-|
+
+### IOSの管理とその他の管理機能
+|モード|コマンド|説明|分類、補足|
+|-----|--------|---|---------|
+|#|show flash|フラッシュメモリに保存されているファイルの確認.スイッチならvlan.datも|SHOW|
+|#show version|IOSに関する情報や容量、コンフィギュレーションレジスタの値やルータについているインターフェイスなどを確認|SHOW|
+|#|copy <コピー元> tftp:|TFTPサーバを利用してバックアップを行う際に、サーバにバックアップをアップロードするコマンド|※C,(1)|
+|#|copy startup-config running-config|パスワードリカバリを行う際に、一度設定ファイルの内容をルータに反映させる|-|
+|config|config-register <コンフィギュレーションレジスタ値>|今ふぃちゅレーションレジスタ値の変更.通常起動は0x2102,startup-configを読み込まないようにするには0x2142|(2)|
+|#|copy running-config startup-config|変更した設定の保存|(3)|
+|#|telnet <IPアドレス\|ホスト名>|ルータやスイッチから他の機器にTELNET接続|-|
+|#|ssh -l <ユーザ名> <IPアドレス\|ホスト名>|ルータやスイッチから他の機器にSSH接続|-|
+|#|exit/logout|リモート接続の終了|-|
+|-|Ctrl + Shift + 6 → X|接続を維持したまま元のデバイスに戻る|-|
+|#|show session|現在存在するリモートセッションの確認|SHOW|
+|#|resume [<セッション番号>]|中断しているセッションを再開(セッション番号:入力しなければ直前に中断したセッション)|-|
+|#|disconnect <セッション番号>|中断しているセッションを切断|-|
+|#|show users|ログインしてきているユーザを確認|SHOW|
+|config|banner motd <区切り文字>|バナーメッセージを設定(区切り文字:メッセージを終了する際に入力する文字)|-|
 
 
 ## 第章
