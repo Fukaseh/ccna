@@ -15,6 +15,7 @@
 |161|SNMP|UDP|ネットワーク機器を監視・管理(SNMPマネージャ→SNMPエージェント)|
 |162|SNMP|UDP|SNMPエージェント→SNMPマネージャ|
 |443|HTTPS|TCP|HTTPをSSLで暗号化|
+|514|Syslog|UDP|Cisco製の危機の出力するシステムログのメッセージを送信||
 |-|RTP|UDP|IP電話などのリアルタイム通信。ポートはアプリケーションが定める|
 
 
@@ -54,3 +55,15 @@
 |ISL|IEEE 802.1Q|トランキングプロトコル(トランクリンクでVLANを識別するためにVLANにタグを付加するプロトコル)|
 |PAgP|LACP(IEE 802.3ad)|EtherChannelのネゴシエーション。PAgPはdesirable or auto.LaCPはactive or passive.|
 |HSRP,GLBP|VRRP|ルータの冗長化のためのプロトコル|
+
+## システムログのレベル
+|重要度|意味|説明|
+|-----|----|----|
+|0|緊急(emergencies)|システムが不安定|
+|1|警報(alerts)|直ちに対応が必要|
+|2|重大(critical)|クリティカルな状態|
+|3|エラー(errors)|エラー状態|
+|4|警告(warnings)|警告状態|
+|5|通知(notifications)|正常だが注意を要する状態|
+|6|情報(informational)|単なる情報メッセージ|
+|7|デバッグ(debugging)|デバッグメッセージ

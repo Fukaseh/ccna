@@ -266,7 +266,7 @@
 |-----|--------|---|---------|
 |config|spanning-tree portfast default|PortFastをアクセスポートすべてで有効にする|※|
 |config-if|spanning-tree portfast [trunk]|インターフェイスごとにPortFastを有効に(トランクポートはtrunkをつける)|-|
-|config|spanning-tree portfast bpdugurard default|PortFastの設定が行われているポートすべてでBPDUガードを有効化|※|
+|config|spanning-tree portfast bpduguard default|PortFastの設定が行われているポートすべてでBPDUガードを有効化|※|
 |config-if|spanning-tree bpduguard <enable\|disable>|インターフェイスでBPDUガードを有効/無効にする|-|
 |config-if|spanning-tree guard root|ルートガード(既存のルートブリッジよりブリッジIDが小さなスイッチが接続されてもSTPのトポロジを変えない)の有効化|※|
 |config-if|no spanning-tree guard root|ルートガードの無効化|-|
@@ -330,11 +330,27 @@
 |#|show snmp user|SNMPユーザの情報の確認|
 
 
-## 第章
-
+## 第12章 デバイスの管理
+### システムログ
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
+|config|logging console <レベル>|コンソールに出力されるシステムログのレベルを変更(レベル:数値orキーワード,デフォルト7)|-|
+|config|no logging console|コンソールに出力するシステムのログをすべて停止|-|
+|#|terminal monitor|VTY接続でログインした際に仮想ターミナルラインにシステムログを出力させる|※|
+|#|terminal no monitor|仮想ターミナルへのシステムのログの出力を停止|※,※C|
+|config|logging monitor <レベル>|仮想ターミナルラインに出力するシステムログのレベルを変更する|-|
+|config|logging buffered <サイズ>|ルータやスイッチのRAMにシステムログを保存するために、サイズを指定して保存領域を確保(サイズ:4096-,単位byte)|-|
+|config|logging buffered <レベル>|出力するシステムログのレベルを変更する(レベル:0-7)|-|
+|config|logging host <IPアドレス\|ホスト名> [transport <tcp\|udp>] [port <ポート番号>]|Syslogサーバにシステムログを送信するためにサーバを指定.デフォルトでUDPポート番号514だがオプションで変更できる|-|
+|config|logging trap <レベル>|Syslogサーバへ蘇秦するシステムログのレベルを変更する|-|
+|config|service timestamps <debug\|log> [<dateime [localtime] [msec] [show-timezone] [year]\|uptime]|デバッグやログで表示されるタイムスタンプ(先頭の時間表記)を変更する(datetime:月/日/時/分/秒,uptime:ルータ起動からの経過時間)(localtime:機器本体に設定したタイムゾーン)|-|
+|config|service sequence-numbers|表示されるメッセージにシーケンス番号を付加する|-|
+|config-line|logging synchronous|ログ表示時に自動的に改行させるように設定|※|
+|#|show logging|ルータやスイッチのRAMに保存しているシステムログの確認|SHOW|
+|#|debug <表示したいデバッグメッセージ>|通常のシステムログを表示させるコマンドでは表示されないデバッグメッセージを表示|-|
+|#|debag ip ospf hello|OSPFのHelloパケットの送受信状況を表示(上の例)|-|
+|#|undebug all/no debug all|すべてのデバッグメッセージの停止|-|
+
 
 
 ## 第章
