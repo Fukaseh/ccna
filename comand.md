@@ -217,26 +217,26 @@
 |config-if|switchport trunk encapsulation <dot1q\|isl>|トランキングプロトコルの種類を設定(ISLがサポートされていないなら省略)|2|
 |config-if|switchport mode trunk|インターフェイスのモードをトランクに設定|3|
 |config-if|switchport trunk native vlan <VLAN番号>|インターフェイスのネイティブVLAN(タグをつけずにそのまま送信する相手)を変更する(任意)|4|
-|config-if|switchport trunk allowed vlan [add|all|noe|except|remove] <VlAN番号>|許可VLANを変更.オプションを指定しないと指定したVLANのみ許可.オプションは現状から指定した内容に従って更新|5|
-|config-if|switchport mode dynamic <auto|desirable>|DTPのネゴシエーションで自動でアクセスかトランクか決定させる|-|
+|config-if|switchport trunk allowed vlan [add\|all\|none\|except\|remove] <VlAN番号>|許可VLANを変更.オプションを指定しないと指定したVLANのみ許可.オプションは現状から指定した内容に従って更新|5|
+|config-if|switchport mode dynamic <auto\|desirable>|DTPのネゴシエーションで自動でアクセスかトランクか決定させる|-|
 |config-if|switchport nonegotiate|DTPフレームの停止(相手が手動でtrunkモードにしているとき等)|-|
 |config-if|switchport voice vlan <VLAN番号>|音声VLANの設定(アクセスポートとして設定される)|-|
 |#|show vlan [brief]|現在スイッチで作成されているVLANの確認.トランクポートは表示されない|SHOW|
 |#|show vlan id <VLAN番号>|特定のVLANの情報を確認.トランクポートも表示される|SHOW|
 |#|show interfaces [<インターフェイス>] trunk|トランクポートとなっているインターフェイスをすべて表示|※C,SHOW|
-|#|show interfaces [<インターフェイス>]
- switchport|現在のスイッチポートの状態を確認|SHOW|
- |#show interfaces status|スイッチのインターフェイスの状態を確認|SHOW|
+|#|show interfaces [<インターフェイス>] switchport|現在のスイッチポートの状態を確認|SHOW|
+ |#|show interfaces status|スイッチのインターフェイスの状態を確認|SHOW|
  |#|show mac address-table|スイッチのMACアドレステーブルを確認.macとaddressの間は-でも可|SHOW|
  config|vtp domain <ドメイン名>|VTPを有効化してVTPドメイン名を設定.同期を行うスイッチ間で一致の必要あり|1|
  |config|vtp mode <server\|client\|transparent>|VTPの動作モードを変更|2|
- |config|vtp version <VTPバージョン>|VTPのバージョンを指定(VTPバージョン:1-3)同期を行うスイッチ間で一致の必要あり|
- |#|show vtp status|VTPの設定を確認|3|
+ |config|vtp version <VTPバージョン>|VTPのバージョンを指定(VTPバージョン:1-3)同期を行うスイッチ間で一致の必要あり|3|
+ |#|show vtp status|VTPの設定を確認|SHOW|
  ### VTP(ルータ側)
+
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
  |config|interface <インターフェイス>.<論理番号>|ルータにサブインターフェイス(仮想のインターフェイス.VLAN間ルーティング等で用いる)の作成.config→config-subif|MODE,1|
- |config-subif|encapsulation <dot1q|isl> <VLAN番号> [native]|サブインターフェイスのトラッキングプロトコルの指定.スイッチと一致させる.ネイティブVLAN用のサブインターフェイスのときはnativeを入力|2|
+ |config-subif|encapsulation <dot1q\|isl> <VLAN番号> [native]|サブインターフェイスのトラッキングプロトコルの指定.スイッチと一致させる.ネイティブVLAN用のサブインターフェイスのときはnativeを入力|2|
  ### レイヤ3スイッチ
  |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
@@ -273,7 +273,7 @@
 |config|spanning-tree vlan <VLAN番号> hello-time <秒数>|Helloタイマー(BPDUを送信する時間)を変更.(デフォルト:2秒)|-|
 |config|spanning-tree vlan <VLAN番号> max-age <秒数>|最大エージタイマー(最後に受け取ったBPDUを保持する期間)の変更(デフォルト:20秒)|-|
 |config|spanning-tree vlan <VLAN番号> forward-time <秒数>|転送遅延タイマー(リスニングとラーニングの状態に留まる時間)の変更(デフォルト:15秒)|-|
-|config|spanning-tree mode <pvst\|rapid-pvst>|動作モードをSTPからRSTPに変更(デフォルト:PVST+)
+|config|spanning-tree mode <pvst\|rapid-pvst>|動作モードをSTPからRSTPに変更(デフォルト:PVST+)|-|
 
 
 ## 第9章 EtherChannel
@@ -293,12 +293,12 @@
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config|ipv6 unicast-routing|ルータでIPv6ルーティングを有効化|
+|config|ipv6 unicast-routing|ルータでIPv6ルーティングを有効化|-|
 |config-if|ipv6 enable|インターフェイスでIPv6を有効にしてリンクローカルユニキャストアドレスを自動で設定|-|
 |config-if|ipv6 address <アドレス> link-local|手動でリンクローカルユニキャストアドレスを設定(アドレス:FE80で始まる)|-|
 |config-if|ipv6 address <アドレス>/<プレフィックス長> [eui-64]|グローバルユニキャストアドレスを設定.インターフェースIDをEUI-64形式のアドレスで設定する場合eui-64が必要|-|
 |config-if|ipv6 address dhcp|ルータのインターフェイスをDHCPv6クラアントとして動作させ，DHCPv6サーバからアドレスを取得|-|
-|show ipv6 <インターフェース>|インターフェイスのIPv6アドレスを確認|SHOW|
+|#|show ipv6 <インターフェース>|インターフェイスのIPv6アドレスを確認|SHOW|
 |config|ipv6 route <プレフィックス>/<プレフィックス長> <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|IPv6でのスタティックルートの設定|-|
 |config|ipv6 route ::/0 <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|IPv6でデフォルトルートの設定|-|
 |#|show ipv6 route|IPv6のルーティングテーブルを確認|SHOW|
@@ -325,9 +325,9 @@
 |config|snmp-server enable traps [<トラップ対象>]|SNMPトラップ、SNMP院フォームを両方有効化.(トラップ対象:省略するとすべてが対象)|2|
 |config|snmp-server group <グループ名> v3 <auth\|noauth\|priv> [read <ビュー名>] [write <ビュー名>] [access <ACL>]|SNMPv3でグループ単位で設定するためにSNMPグループを作成|1|
 |config|snmp-server user <ユーザ名> <グループ名> v3 [auth <md5\|sha> <パスワード> [priv <des\|3des\|aes <128\|192\|256>>]]|SNMPユーザをSNMPグループと関連付けながら作成|2|
-|#|show snmp view|SNMPビューの確認|-|
-|#|show snmp group|SNMPグループの確認|-|
-|#|show snmp user|SNMPユーザの情報の確認|
+|#|show snmp view|SNMPビューの確認|SHOW|
+|#|show snmp group|SNMPグループの確認|SHOW|
+|#|show snmp user|SNMPユーザの情報の確認|SHOW|
 
 
 ## 第12章 デバイスの管理
@@ -387,7 +387,7 @@
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
 |#|show flash|フラッシュメモリに保存されているファイルの確認.スイッチならvlan.datも|SHOW|
-|#show version|IOSに関する情報や容量、コンフィギュレーションレジスタの値やルータについているインターフェイスなどを確認|SHOW|
+|#|show version|IOSに関する情報や容量、コンフィギュレーションレジスタの値やルータについているインターフェイスなどを確認|SHOW|
 |#|copy <コピー元> tftp:|TFTPサーバを利用してバックアップを行う際に、サーバにバックアップをアップロードするコマンド|※C,(1)|
 |#|copy startup-config running-config|パスワードリカバリを行う際に、一度設定ファイルの内容をルータに反映させる|-|
 |config|config-register <コンフィギュレーションレジスタ値>|今ふぃちゅレーションレジスタ値の変更.通常起動は0x2102,startup-configを読み込まないようにするには0x2142|(2)|
