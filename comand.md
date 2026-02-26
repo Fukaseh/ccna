@@ -435,26 +435,14 @@
 |config|[no] ip dhcp snooping information option|リレーエージェント情報オプション(オプション82)(特定のポートに接続された危機に特定のIPアドレスの割当などの制御を可能にする)の有効化/無効化(デフォルト:有効化)|-|
 |config-if|ip dhcp snooping limit rate <レート>|DHCPパケットの最大受信レート(1s当たりのDHCPパケットの最大数)を指定|-|
 |#|show ip dhcp snooping|DHCPスヌーピングの設定情報確認|SHOW|
-|#|show ip dhcp snooping binding|
+|#|show ip dhcp snooping binding|DHCPスヌーピングバインディングデータベース(PCに割り当てられたIPアドレスなどの情報が格納されている)の確認|SHOW|
+|config|ip arp  inspection vlan <VLAN番号>|ダイナミックARPインスペクション(スイッチのポートをtrustとuntrustに分ける)を有効化(すべてのポートがuntrustに)|1|
+|config-if|ip arp inspection trust|信頼できるポートに設定|(2)|
+|config|vlan dot1q tag native|ネイティブVLANでもタグを付加されるように設定(ダブルタギング攻撃対策)|-|
 
-
-## 第章
-
+### AAA
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|
-
-
-## 第章
-
-|モード|コマンド|説明|分類、補足|
-|-----|--------|---|---------|
-|
-
-
-
-
-
-
-
-
+|config|aaa new-model|AAAを有効化|1|
+|config|aaa authentication login <default\|リスト名> <認証方式1> [<認証方式2>]|ログイン時の認証方式の設定(方式によってはあらかじめパスワードを設定したり、サーバを事前構築しておく必要あり)(default:すべてのログイン絶族で使用される)|2|
+|config-line|login authentication <default\|リスト名>|認証方式リストを適用|※,(3)|

@@ -56,6 +56,8 @@
 |PAgP|LACP(IEE 802.3ad)|EtherChannelのネゴシエーション。PAgPはdesirable or auto.LaCPはactive or passive.|
 |HSRP,GLBP|VRRP|ルータの冗長化のためのプロトコル|
 |CDP|LLDP(802.1AB)|データリンク層で隣接機器の情報を取得するためのプロトコル|
+|TACACS+|RADIUs|AAAを実装する際に使用されるプロトコル|
+
 
 ## システムログのレベル
 |重要度|意味|説明|
@@ -68,3 +70,5 @@
 |5|通知(notifications)|正常だが注意を要する状態|
 |6|情報(informational)|単なる情報メッセージ|
 |7|デバッグ(debugging)|デバッグメッセージ
+
+p780
