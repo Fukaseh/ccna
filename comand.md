@@ -426,7 +426,7 @@
 |config-if|switchport port-security mac-address <MACアドレス>|セキュアMACアドレスを手動で登録(登録可能な最大数に達していない場合に限り)(デフォルトで自動的に学習するようにはなっている)|-|
 |config-if|switchport port-security mac-address sticky|スティッキーラーニング(自動登録されたセキュアMACアドレスをrunning-configに残るように)を有効化|-|
 |config-if|switchport port-security violation <restrict\|protect\|shutdown>|セキュリティ違反が起きたときのモードを設定(デフォルト:shutdown)
-|#|show port-security|ポートセキュリティの設定(登録されたセキュアMACアドレスは✕)の確認|SHOW|
+|#|show port-security|ポートセキュリティの設定(登録されたセキュアMACアドレスは×)の確認|SHOW|
 |#|show port-security address|登録されたセキュアMACアドレスを確認|※,SHOW|
 |#|show port-security interface <インターフェス>|インターフェイスごとにポートセキュリティの設定を確認|※,SHOW|
 |config|ip dhcp snooping|DHCPスヌーピング(スイッチの各ポートをtrustとuntrustに分ける)の有効化(VLAN単位では無効となっている)|-|
