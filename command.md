@@ -43,10 +43,10 @@
 ### showコマンドのパイプを用いた検索機能
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config|show <調べたい内容> \| begin <指定する内容>|一致した行から表示を開始|SHOW| 
-|config|show <調べたい内容> \| exclude <指定する内容>|一致した行を表示しない|SHOW|
-|config|show <調べたい内容> \| include <指定する内容>|一致した行のみを表示|SHOW|
-|config|show <調べたい内容> \|section <指定する内容>|一致したセクションを表示|SHOW|
+|#|show <調べたい内容> \| begin <指定する内容>|一致した行から表示を開始|SHOW| 
+|#|show <調べたい内容> \| exclude <指定する内容>|一致した行を表示しない|SHOW|
+|#|show <調べたい内容> \| include <指定する内容>|一致した行のみを表示|SHOW|
+|#|show <調べたい内容> \| section <指定する内容>|一致したセクションを表示|SHOW|
 
 
 
@@ -58,12 +58,12 @@
 |config-line|password <パスワード>|パスワードを設定|2|
 |config-line|login|パスワード認証を有効化|3|
 |config|enable password <パスワード>|イネーブルパスワードの設定|-|
-|config|enable secret <パスワード>|イネーブルパスワードの暗号化(こちらの方が優先)|-|
-|config|line vty <開始ライン番号> [<終了ライン番号>]|VTYパスワードの設定|-|
+|config|enable secret <パスワード>|暗号化されたイネーブルパスワードの設定(こちらの方が優先)|-|
+|config|line vty <開始ライン番号> [<終了ライン番号>]|VTYパスワードの設定のためのconfig-lineに.config→config-line|MODE|
 |config|username <ユーザ名> [privilege <特権レベル> ] password <パスワード>|ユーザアカウントの作成|1,※|
 |config-line|login local|ユーザアカウントを使用して認証(認証方法を変更)|(2),※|
 |config|service password-encryption|パスワード全体を暗号化|-|
-|config-line|exec-timeout <分> [<秒>]|自動ログアウトの設定|-|
+|config-line|exec-timeout <分> [<秒>]|自動ログアウトの設定|※|
 
 ### SSHの設定
 |モード|コマンド|説明|分類、補足|
@@ -102,15 +102,15 @@
 |-----|--------|---|---------|
 |#|show ip route|ルーティングテーブルの確認|SHOW|
 |config|ip route <宛先ネットワーク> <サブネットマスク> <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|スタティックルートの設定(ネクストホップアドレスは隣接ルータのIPアドレス)|-|
-|config|ip route 0.0.0.0.0.0.0.0 <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|デフォルトゲートウェイの設定|-|
+|config|ip route 0.0.0.0 0.0.0.0 <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|デフォルトゲートウェイの設定|-|
 |config|ip route <宛先IPアドレス> 255.255.255.255 <ネクストホップアドレス\|出力インターフェイス> [<アドミニストレーティブディスタンス値>]|ホストルート(特定の1台宛のルート)を設定|-|
 
 ## 第4章 OSPF
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config|router ospf <プロセスID>|OSPF(ダイナミックルーティング)の有効化(ID:1-65535を設定可).config→config-router|MODE|
-|config-router|network <IPアドレス> <ワイルドカードマスク> area <エリアID>|IPアドレスの範囲に含まれるインターフェイスでOSPFを有効化|-|
+|config|router ospf <プロセスID>|OSPF(ダイナミックルーティング)の有効化のためにconfig-routerへ(ID:1-65535を設定可).config→config-router|MODE,1|
+|config-router|network <IPアドレス> <ワイルドカードマスク> area <エリアID>|IPアドレスの範囲に含まれるインターフェイスでOSPFを有効化|2|
 |config-if|ip ospf <プロセスID> area <エリアID>|インターフェイスごとに個別にOSPFを有効化|-|
 |config-router|passive-interface <インターフェイス>|パッシブインターフェイス(Helloパケットを送信しない)の設定|※|
 |config-router|router-id <ルータID>|ルータID(形式はIPアドレスと同じ)を手動で設定|※|
