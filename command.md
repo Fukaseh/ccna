@@ -280,7 +280,7 @@
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config-if|channel-group <ループ番号> mode <on\|desirable\|active\|passive>|EtherChannelを形成する.グループ番号は字スイッチ内でそろえる必要はあるが、対向のスイッチと合わせる必要はない|-|
+|config-if|channel-group <ループ番号> mode <on\|auto\|desirable\|active\|passive>|EtherChannelを形成する.グループ番号は字スイッチ内でそろえる必要はあるが、対向のスイッチと合わせる必要はない.PAgP:Auto/desirable, LACP:active/passive|-|
 |config-if|channel-protocol <lacp\|pagp>|ネゴシエーションを行うプロトコルを指定.上のコマンドで自動で決まるので実行しなくてもいいが、先に実行することでミスを減らせる|-|
 |config|port-channel load-balance <負荷分散方法>|EtherChannelでの負荷分散の方法を変更.<負荷分散方法>でsrcなら送信元,dstなら宛先で、後ろは何を基に負荷分散するかを表す|-|
 |config|interface range <インターフェイス>|複数のポートに同じ設定をまとめて行う.config→config-if-range|MODE|
@@ -310,7 +310,7 @@
 |-----|--------|---|---------|
 |config-if|standby [<スタンバイグループ番号>] ip [<仮想IPアドレス>]|HSRPの有効化(スタンバイグループ番号:0-255,省略したら0)(仮想IPアドレスはルータに設定されているIPアドレスは設定できない)|-|
 |config-if|standby [<スタンバイグループ番号>] priority <プライオリティ値>|HSRPプライオリティ値の変更(プライオリティ値:0-255,デフォルト100)|-|
-|config-if|standby [<スタンバイグループ番号>] preempt|プリエンプト(常にプライオリティ値の大きいルータを置くてぃぶルータとする機能)の有効化|-|
+|config-if|standby [<スタンバイグループ番号>] preempt|プリエンプト(常にプライオリティ値の大きいルータをアクティブルータとする機能)の有効化|-|
 |config-if|standby [<スタンバイグループ番号>] track<インターフェイス> [<減少値>]|インターフェイストラッキング(インターフェイスがdownすると<減少値>だけHSRPプライオリティ値を減少させる機能)を有効化(減少値:デフォルト10)|-|
 |#|show standby brief|HSRPの要約情報を確認|SHOW|
 |#|show standby|HSRPの詳細情報を確認|SHOW|
@@ -320,9 +320,9 @@
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
 |config|snmp-server view <ビュー名> <MIB名> <include\|exclude>|SNMPビュー(特定のMIB情報だけをSNMPマネージャから取得させる/させない機能)を作成|-|
-|config|snmp-server community <コミュニティ名> [view <ビュー名>] [ro\|rw] [<ACL>]|コミュニティ名を設定(認証のため).コミュニティ名はSNMPマネージャとSNMPエージェントで合わせておく.ACLオプションでACLのpermitで指定されているアドレスの要求のっみ受け付ける|-|
+|config|snmp-server community <コミュニティ名> [view <ビュー名>] [ro\|rw] [<ACL>]|コミュニティ名を設定(認証のため).コミュニティ名はSNMPマネージャとSNMPエージェントで合わせておく.ACLオプションでACLのpermitで指定されているアドレスの要求のみ受け付ける|-|
 |config|snmp-server host <IPアドレス> [traps\|informs] [version <1\|2c\|3 <auth \|noauth\|priv>>] <コミュニティ名\|ユーザ名>|SNMPの通知機能の設定のためにSNMPマネージャの指定.(IPアドレス:送信先).通知の種類はSNMPv1はtrapsのみ,SNMPv2cやSNMPv3はinformsも可.v3はセキュリティレベルも指定.(v1,v2c→コミュニティ名,v3→ユーザ名.)|1|
-|config|snmp-server enable traps [<トラップ対象>]|SNMPトラップ、SNMP院フォームを両方有効化.(トラップ対象:省略するとすべてが対象)|2|
+|config|snmp-server enable traps [<トラップ対象>]|SNMPトラップ、SNMPインフォームを両方有効化.(トラップ対象:省略するとすべてが対象)|2|
 |config|snmp-server group <グループ名> v3 <auth\|noauth\|priv> [read <ビュー名>] [write <ビュー名>] [access <ACL>]|SNMPv3でグループ単位で設定するためにSNMPグループを作成|1|
 |config|snmp-server user <ユーザ名> <グループ名> v3 [auth <md5\|sha> <パスワード> [priv <des\|3des\|aes <128\|192\|256>>]]|SNMPユーザをSNMPグループと関連付けながら作成|2|
 |#|show snmp view|SNMPビューの確認|SHOW|
@@ -342,7 +342,7 @@
 |config|logging buffered <サイズ>|ルータやスイッチのRAMにシステムログを保存するために、サイズを指定して保存領域を確保(サイズ:4096-,単位byte)|-|
 |config|logging buffered <レベル>|出力するシステムログのレベルを変更する(レベル:0-7)|-|
 |config|logging host <IPアドレス\|ホスト名> [transport <tcp\|udp>] [port <ポート番号>]|Syslogサーバにシステムログを送信するためにサーバを指定.デフォルトでUDPポート番号514だがオプションで変更できる|-|
-|config|logging trap <レベル>|Syslogサーバへ蘇秦するシステムログのレベルを変更する|-|
+|config|logging trap <レベル>|Syslogサーバへ送信するシステムログのレベルを変更する|-|
 |config|service timestamps <debug\|log> [<dateime [localtime] [msec] [show-timezone] [year]\|uptime]|デバッグやログで表示されるタイムスタンプ(先頭の時間表記)を変更する(datetime:月/日/時/分/秒,uptime:ルータ起動からの経過時間)(localtime:機器本体に設定したタイムゾーン)|-|
 |config|service sequence-numbers|表示されるメッセージにシーケンス番号を付加する|-|
 |config-line|logging synchronous|ログ表示時に自動的に改行させるように設定|※|
@@ -390,7 +390,7 @@
 |#|show version|IOSに関する情報や容量、コンフィギュレーションレジスタの値やルータについているインターフェイスなどを確認|SHOW|
 |#|copy <コピー元> tftp:|TFTPサーバを利用してバックアップを行う際に、サーバにバックアップをアップロードするコマンド|※C,(1)|
 |#|copy startup-config running-config|パスワードリカバリを行う際に、一度設定ファイルの内容をルータに反映させる|-|
-|config|config-register <コンフィギュレーションレジスタ値>|今ふぃちゅレーションレジスタ値の変更.通常起動は0x2102,startup-configを読み込まないようにするには0x2142|(2)|
+|config|config-register <コンフィギュレーションレジスタ値>|コンフィギュレーションレジスタ値の変更.通常起動は0x2102,startup-configを読み込まないようにするには0x2142|(2)|
 |#|copy running-config startup-config|変更した設定の保存|(3)|
 |#|telnet <IPアドレス\|ホスト名>|ルータやスイッチから他の機器にTELNET接続|-|
 |#|ssh -l <ユーザ名> <IPアドレス\|ホスト名>|ルータやスイッチから他の機器にSSH接続|-|
@@ -415,13 +415,13 @@
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
 |config|enable algorithm-type <md5\|scrypt\|sha256> secret <パスワード>|イネーブルパスワードの暗号化のアルゴリズムを指定.(md5:従来のenable secret)|-|
-|config|username <ユーザ名> [privilege <特権レベル>] secret <パスワード>|ローカル認証に使用するユーザアカウントパスワードの暗号化(MD5アルゴリズム).ユーザ名1つに対して平文形式化暗号化形式化どちらかしか設定できない(同じ形式のパスワードを上書きは可能)|-|
+|config|username <ユーザ名> [privilege <特権レベル>] secret <パスワード>|ローカル認証に使用するユーザアカウントパスワードの暗号化(MD5アルゴリズム).ユーザ名1つに対して平文形式か暗号化形式かどちらかしか設定できない(同じ形式のパスワードを上書きは可能)|-|
 |config|username <ユーザ名> [privilege <特権レベル>] algorithm-type <md5\|scrypt\|sha256> secret <パスワード>|ユーザアカウントパスワードをアルゴリズムを指定して暗号化|-|
 
 ### スイッチのセキュリティ機能
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config-if|switchport port-security|ポートセキュリティの有効化(事前に手動でアクセスポート化トランクポートに設定する必要あり)|(1)|
+|config-if|switchport port-security|ポートセキュリティの有効化(事前に手動でアクセスポートかトランクポートに設定する必要あり)|(1)|
 |config-if|switchport port-security maximum <最大値>|インターフェイスに登録できるセキュアMACアドレスの最大数の変更(デフォルト:1)|-|
 |config-if|switchport port-security mac-address <MACアドレス>|セキュアMACアドレスを手動で登録(登録可能な最大数に達していない場合に限り)(デフォルトで自動的に学習するようにはなっている)|-|
 |config-if|switchport port-security mac-address sticky|スティッキーラーニング(自動登録されたセキュアMACアドレスをrunning-configに残るように)を有効化|-|
@@ -432,7 +432,7 @@
 |config|ip dhcp snooping|DHCPスヌーピング(スイッチの各ポートをtrustとuntrustに分ける)の有効化(VLAN単位では無効となっている)|-|
 |config|ip dhcp snooping vlan <VLAN番号>|DHCPスヌーピングを有効にするVLANの指定(,や-でまとめて指定可)|-|
 |config-if|[no] ip dhcp snooping trust|信頼できる/できないポートの指定(デフォルト:untrust)|-|
-|config|[no] ip dhcp snooping information option|リレーエージェント情報オプション(オプション82)(特定のポートに接続された危機に特定のIPアドレスの割当などの制御を可能にする)の有効化/無効化(デフォルト:有効化)|-|
+|config|[no] ip dhcp snooping information option|リレーエージェント情報オプション(オプション82)(特定のポートに接続された機器に特定のIPアドレスの割当などの制御を可能にする)の有効化/無効化(デフォルト:有効)|-|
 |config-if|ip dhcp snooping limit rate <レート>|DHCPパケットの最大受信レート(1s当たりのDHCPパケットの最大数)を指定|-|
 |#|show ip dhcp snooping|DHCPスヌーピングの設定情報確認|SHOW|
 |#|show ip dhcp snooping binding|DHCPスヌーピングバインディングデータベース(PCに割り当てられたIPアドレスなどの情報が格納されている)の確認|SHOW|
