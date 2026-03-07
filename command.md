@@ -147,7 +147,7 @@
 |-----|--------|---|---------| 
 |config|access-list <ACL番号> <permit\|deny> <プロトコル> <送信元IPアドレス> <ワイルドカードマスク> [<送信元ポート番号>] <宛先IPアドレス> <ワイルドカードマスク> [<オプション>]|番号付き拡張ACLの作成.(ACL番号:100-199,2000-2699)(プロトコル:ip,tcp,udp,icmp等)|1,2|
 |config|ip access-list extended <ACL名>|名前付き拡張ACLの作成.config→config-ext-nacl|MODE,1|
-|config-ext-nacl|<シーケンス番号> <permit\|deny> <プロトコル> <送信元IPアドレス> <ワイルドカードマスク> [<送信元ポート番号>] <宛先IPアドレス> <ワイルドカードマスク> [<オプション>]|拡張番号付きACLの条件設定|2|
+|config-ext-nacl|<シーケンス番号> <permit\|deny> <プロトコル> <送信元IPアドレス> <ワイルドカードマスク> [<送信元ポート番号>] <宛先IPアドレス> <ワイルドカードマスク> [<オプション>]|拡張名前付きACLの条件設定|2|
 |config-if|ip access-group <ACL番号\|ACL名> <in\|out>|作成した標準ACLを(送信元に近い)インターフェイスに適用|※,(3)|
 
 |プロトコル|オプション例|説明|
@@ -163,7 +163,7 @@
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
-|config-if|ip nat <inside\|outside>|NATでルータのインターフェイスにインサイドか会おうと再度を指定|※,1|
+|config-if|ip nat <inside\|outside>|NATでルータのインターフェイスにインサイドかアウトサイドを指定|※,1|
 |config|ip nat inside source static <内部ローカルアドレス> <内部グローバルアドレス>|NATテーブルにアドレスの組み合わせを登録(スタティックNAT,手動)|(2)|
 |#|show ip nat translations|NATテーブルの確認|SHOW|
 |#|show ip nat statistics|NATによるアドレス変換の統計情報の確認|SHOW|
@@ -200,7 +200,7 @@
 |#|show hosts|ルータが保持している静的・動的なDNS情報の確認|SHOW|
 
 
-## 第7章 Catalystスイッチの基本設定斗VLAN
+## 第7章 Catalystスイッチの基本設定とVLAN
 
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
@@ -211,7 +211,7 @@
 |config-vlan|<exit\|end>|config-vlanを終了することで設定を確定|3|
 |config|no vlan <VLAN番号>|VLANの削除|-|
 |config|interface <インターフェイス>|アクセスポートの設定のためにconfig-ifに|1|
-|config\if|switchport mode access|インターフェイスのモードをアクセスに設定|※,2|
+|config-if|switchport mode access|インターフェイスのモードをアクセスに設定|※,2|
 |config-if|switchport access vlan <VLAN番号>|所属するVLANを指定|-|
 |config|interface <インターフェイス>|トランクポートの設定のためにconfig-ifに|1|
 |config-if|switchport trunk encapsulation <dot1q\|isl>|トランキングプロトコルの種類を設定(ISLがサポートされていないなら省略)|2|
@@ -251,7 +251,7 @@
 |モード|コマンド|説明|分類、補足|
 |-----|--------|---|---------|
 |#|show spanning-tree [vlan <VLAN番号>]|STPの状態を確認|SHOW|
-|#|show spanning-tree interface <インターフェイス>|STPがどう咲いているインターフェイス(ポート)の状態を確認|-|
+|#|show spanning-tree interface <インターフェイス>|STPが動作しているインターフェイス(ポート)の状態を確認|-|
 |#|debug spanning-tree events|STPの動作の確認を開始する|-|
 |#|no debug spanning-tree evets|STPの動作の確認の停止|-|
 |config|spanning-tree vlan <VLAN番号> priority <プライオリティ>|ブリッジプライオリティの変更(ルートブリッジを変更するため)(プライオリティ:4096の倍数,最小値0,表示はVLAN番号を足した数字となる)|-|
