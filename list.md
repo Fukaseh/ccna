@@ -276,6 +276,13 @@ Rest API:Cisco DNA CenterのノースバウンドAPI
 |OAuth|大手サイトに登録しているアカウント情報を使い、別のサイトへのログインや連携などを可能にする認証方式。アクセストークンを用いて認証・認可を行う|
 |APIキー認証|クライアントがAPIキー(APIの呼び出し元となるアプリケーションを識別する文字列で、権限を持っている呼び出し元に限りAPIを使用できる)をリクエスト内に含める|
 
+### SDNソリューション
+|SDNソリューション|コントロールプレーンが変わるか|コントロールプレーンの集中度|SBI|代表的なコントローラ|
+|----|--|--|--|--|
+|Open SDN|○|ほぼすべて|OpenFlow|OpenDaylight SDN controller, Cisco Open SDN controller|
+|Cisco ACI|○|一部|OpFlex|APIC|
+|APIC Enterprise Module|×|分散(集中管理×)|CLI(Telnet,SSH),SNMP|APIC-EM|
+
 
 ## セキュリティ
 ### ワイヤレスLANのセキュリティ規格
@@ -308,4 +315,13 @@ Rest API:Cisco DNA CenterのノースバウンドAPI
 |Inventory|管理情報のデバイスの情報を記載したファイル|
 |Templates|Jinja2(Python用のテンプレートエンジン)で書かれたデバイス設定のテンプレートファイル|
 |Variables|テンプレートに代入する変数のリストを記載したファイル|
+
+## HTTPのリクエストメソッド
+|リクエストメソッド|動作|CRUD|
+|-|-|-|
+|POST|新規作成|Create|
+|GET|読み出し|Read|
+|PUT|更新(置換)|Update/Replace|
+|PATCH|更新(変更)|Update/Modify|
+|DELETE|削除|Delete|
 
