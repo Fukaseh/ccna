@@ -340,3 +340,13 @@ Rest API:Cisco DNA CenterのノースバウンドAPI
 |PATCH|更新(変更)|Update/Modify|
 |DELETE|削除|Delete|
 
+
+## その他の単語
+* Enhanced Open : 主に飲食店やホテルなどの公衆Wi-Fiで使用されるセキュリティ規格。WPA3の拡張機能。OWEという技術を用いて通信の暗号化を行う。
+
+* MPLS VPN(IP-VPN)
+:MPLS VPNは、ISPが提供するL3VPNサービスの一つで、以下の技術を組み合わせて実現する
+    * VRFを使用して各企業のVPNを構築
+    * MPBGPを使用してVRF情報を交換
+    * MPLSを使用してパケットを転送
+

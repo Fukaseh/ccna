@@ -5,6 +5,15 @@
 ## Security
 ### Layer2
 * AutoConfig iPSK : iPSK(同一SSIDに対して複数の異なる事前共有鍵を作成)の有効化(RADIUSサーバとWLCを連携させておく必要あり)
+
+#### Protected Management Frame
+正当なクライアントの関連付けが解除されてしまう問題を防ぐ
+* PMF
+    * Required : PMFをサポートしていないクライアントの接続を許可しない
+    * Optional : PMFをサポートしていないクライアントの接続を許可する
+* Comebackタイマー：関連付け要求を拒否されたクライアントが再度要求を試行するまでに待機する時間
+* SAクエリタイムアウト：WLCがSAクエリプロセス(なりすましのアソシエーション要求を拒否するために正当なクライアントとWLCの間で行われるやり取り)の応答を待機する時間
+
 #### WPA + WPA2 Parameter
 * WPA [WPA2]の設定
     1. Layer 2 Security選択ボックスから「WPA+WPA2」を選択
