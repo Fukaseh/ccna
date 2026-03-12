@@ -5,6 +5,7 @@
 ## Security
 ### Layer2
 * AutoConfig iPSK : iPSK(同一SSIDに対して複数の異なる事前共有鍵を作成)の有効化(RADIUSサーバとWLCを連携させておく必要あり)
+* MAC Filtering : MACフィルタリングの有効化(WLANごとに設定可能)
 
 #### Protected Management Frame
 正当なクライアントの関連付けが解除されてしまう問題を防ぐ
@@ -38,6 +39,9 @@
 
 ## Advanced
 * DHCPなどの設定
+* Enable Session Timeout : セッションのタイムアウトするまでの時間の設定(単位:s)
+* Maximum Allowed Clients : 無線LANクライアントの最大同時接続数の設定
+* Maximum Allowed Clients Per AP Radio : APの周波数帯ごとの同時接続数の設定
 
 # WIRELESS
 ## General
