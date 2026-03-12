@@ -39,3 +39,12 @@
 ## Advanced
 * DHCPなどの設定
 
+# WIRELESS
+## General
+* AP Mode : LAPのモード(BridgeやSnifferなど)を変更
+
+# SECURITY
+## AAA
+### Local Net Users
+ローカルEAP認証に使用するユーザの作成。クライアントがAPに接続するとき、ここで設定したユーザ名とパスワードで認証を行う
+* Guest UserクライアントとAPの接続に制限時間を設けることができる
