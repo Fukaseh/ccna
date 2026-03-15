@@ -43,6 +43,11 @@ DHCPなどの設定
 * Enable Session Timeout : セッションのタイムアウトするまでの時間の設定(単位:s)
 * Maximum Allowed Clients : 無線LANクライアントの最大同時接続数の設定
 * Maximum Allowed Clients Per AP Radio : APの周波数帯ごとの同時接続数の設定
+* Wi-Fi Direct Clients Policy : デバイス同士が無線LANルータやアクセスポイントを介さずに直接接続（P2P接続）するための通信方式に関する設定
+    * Disabled : ポリシーを無効化. 判定なしで参加許可
+    * Allow : デバイスがWi-Fi Directの機能を使用していることを判定した上でWLANに参加することを許可
+    * Not-Allow : すべてのP2P対応デバイスがWLANに参加することを拒否する
+    
 ### Load Balancing and Band Select
 * Load Balancing : 
 * Client Band Select : デュアルバンド対応のクライアントがアクセスしてきた場合は、5GHz帯の周波数を優先的に使用する
