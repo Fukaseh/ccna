@@ -1,6 +1,10 @@
 # WLANs
+* 初めにWLANに割り当てるProfile NameとSSIDを設定
 ## General
-* 全般情報の確認と WLANの有効化/無効化、WLANとインターフェースのマッピング
+* Status : WLANの有効化/無効化
+* Radio Policy : 使用するIEEE 802.11規格を選択
+* Interface/Interface Group(G) : 紐づけるインターフェイスを選択
+* Broadcast SSID : SSIDブロードキャストを有効化(チェックを外すとステルスモードに)
 
 ## Security
 ### Layer2
@@ -29,7 +33,7 @@
 * FT 802.1X, FT PSK : FT(Fast Transition)を有効にする場合に選択
 
 ### Layer3
-* Web認証の有効化/無効化
+* Layer3セキュリティ : Web PolicyにすることでWeb認証の有効化
 
 ### AAA Severs
 * WLANとRADIUSサーバを連携
@@ -39,6 +43,7 @@
 
 ## Advanced
 DHCPなどの設定
+* FlexConnect Local Switching : FlexConnectモードでローカルスイッチング(アクセスポートが独立して動作)の有効化
 * Allow AAA Override : RADIUSサーバが持つユーザ情報に基づいてユーザを特定のVLANに動的に割り当てる
 * Enable Session Timeout : セッションのタイムアウトするまでの時間の設定(単位:s)
 * Maximum Allowed Clients : 無線LANクライアントの最大同時接続数の設定
@@ -47,14 +52,18 @@ DHCPなどの設定
     * Disabled : ポリシーを無効化. 判定なしで参加許可
     * Allow : デバイスがWi-Fi Directの機能を使用していることを判定した上でWLANに参加することを許可
     * Not-Allow : すべてのP2P対応デバイスがWLANに参加することを拒否する
-    
+
 ### Load Balancing and Band Select
 * Load Balancing : 
 * Client Band Select : デュアルバンド対応のクライアントがアクセスしてきた場合は、5GHz帯の周波数を優先的に使用する
 
 # Controller
+## General
+* LAG Mode on next reboot : リンクアグリゲーションの有効化
+
+
 ## Interface
-* Newを押してDynamicインターフェイスを追加できる
+* Newを押してDynamicインターフェイスを追加できる(Vlan番号、使用するポート、IPアドレスなどを設定)
 
 # WIRELESS
 ## General
@@ -62,6 +71,11 @@ DHCPなどの設定
 
 # SECURITY
 ## AAA
+### Radiusサーバの指定
+#### Authentication
+* Shared Secret Format : 事前共有キーをASCIIかHexから指定
+* Network User : 無線LANクライアントが接続する際にRADIUSによる認証を行うように
+* Managemaet : ワイヤレスLANコントローラ事態への管理ログイン時にRADIUSによる認証を行うように
 ### Local Net Users
 ローカルEAP認証に使用するユーザの作成。クライアントがAPに接続するとき、ここで設定したユーザ名とパスワードで認証を行う
 * Guest UserクライアントとAPの接続に制限時間を設けることができる
